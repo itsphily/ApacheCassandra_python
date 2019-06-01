@@ -1,8 +1,15 @@
 # Description
 Built an Apache Cassandra database to analyze data on songs and user activity, and find what songs are users listening to.
 
-# Data
-The data (included in) resides in a event_data directory of CSV files on user activity on the app.
+# Included
+>- ELT.py: Main,run to execute the 3 queries.
+>- ETLfunctions.py
+>- CQLqueries.py 
+>- The data (included in) resides in a event_data directory of CSV files on user activity on the app.
+
+# Required
+Have apache cassandra installed and running
+Install the following libraries: pandas, cassandra, Cluster (from cassandra.cluster).
 
 # How
 Build, fill and analyze the database by creating an ELT pipeline using a python driver.<br>

@@ -87,7 +87,8 @@ def table_query_1(session):
         next(csvreader)
         for line in csvreader:
         # Creates a table inserting the values we selected
-            session.execute(insert_table1, (line[8], line[3], line[0], line[9], line[5]))
+        # sessionid, iteminsession, artist, song, length, PRIMARY KEY(sessionid, iteminsession)
+            session.execute(insert_table1, (int(line[8]), int(line[3]), line[0], line[9], float(line[5])))
 
     # REMOVE BRACKETS TO VERIFY IF THE DATA WAS ENTERED PROPERLY IN THE TABLE
     """
@@ -115,7 +116,8 @@ def table_query_2(session):
         csvreader = csv.reader(f)
         next(csvreader) # skip header
         for line in csvreader:
-            session.execute(insert_table2, (line[8], line[10], line[0], line[9], line[3], line[1], line[4]))
+            #userid , sessionid, itemInSession, artist, song, firstname, lastname
+            session.execute(insert_table2, (int(line[10]), int(line[8]), int(line[3]), line[0], line[9], line[1], line[4]))
 
     # REMOVE BRACKETS TO VERIFY IF THE DATA WAS ENTERED PROPERLY IN THE TABLE
     """
@@ -134,7 +136,6 @@ def table_query_3(session):
     # Resets (drop and create) table3
     session.execute(drop_table3)
     session.execute(create_table3)
-
     ## Create a new table to fit query#1
     # Opens the new datafile we just created
     file = 'event_datafile_new.csv'
@@ -142,7 +143,8 @@ def table_query_3(session):
         csvreader = csv.reader(f)
         next(csvreader) # skip header
         for line in csvreader:
-            session.execute(insert_table3, (line[9], line[1], line[4]))
+            # song, userid, firstname, lastname
+            session.execute(insert_table3, (line[9], int(line[10]), line[1], line[4]))
 
     # REMOVE BRACKETS TO VERIFY IF THE DATA WAS ENTERED PROPERLY IN THE TABLE
     """"
@@ -161,25 +163,30 @@ def table_query_3(session):
 
 # Query #1: Get artist, song title and song 's length in the music app history that was heard during  sessionId = 338, and itemInSession  = 4
 def query1(session):
+    print('*'*100)
     print('Query#1 returns the following rows:')
     rows = session.execute(query1_command)
     for row in rows:
-        print(row.artist, row.song, row.length)
-
+        print('Artist:', row.artist, '\t\t\t Song:', row.song, '\t\t\t length:', row.length)
+    print('*' * 100, '\n')
 # Query #2: Give me only the following: name of artist, song(sorted by itemInSession) and user(first and last name) for userid = 10, sessionid = 182
 def query2(session):
+    print('*' * 100)
     print('Query#2 returns the following rows:')
     rows = session.execute(query2_command)
+    print('First name:', rows[0].firstname, '\t Last name:', rows[0].lastname)
     for row in rows:
-        print(row.artist, row.firstname, row.lastname, row.song)
+        print('Artist:', row.artist, '\t\t\t Song:', row.song, '\t\t\t Item in session:', row.iteminsession)
+    print('*' * 100, '\n')
 
 # Query #3: Give me every user name(first and last) in my music app history who listened to the song 'All Hands Against His Own'
 def query3(session):
+    print('*' * 100)
     print('Query#3 returns the following rows:')
     rows = session.execute(query3_command)
     for row in rows:
-        print(row.firstname, row.lastname)
-
+        print('First name:', row.firstname, '\t\t\t Last name:', row.lastname)
+    print('*' * 100, '\n')
 
 # Drops the tables and closes the connection
 def close(session, cluster):
