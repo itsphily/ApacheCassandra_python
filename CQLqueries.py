@@ -1,7 +1,7 @@
 
 # Drop and create the keyspace
-drop_cassandra_keyspace = """DROP KEYSPACE Sparkify """
-create_cassandra_keyspace = """CREATE KEYSPACE Sparkify 
+drop_cassandra_keyspace = """DROP KEYSPACE IF EXISTS Sparkify """
+create_cassandra_keyspace = """CREATE KEYSPACE IF NOT EXISTS Sparkify 
     WITH REPLICATION = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 }"""
 
 # Drop and create table1, table2, table 3 CQL command
