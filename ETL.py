@@ -1,3 +1,4 @@
+# Imports and libraries
 import pandas as pd
 import cassandra
 from cassandra.cluster import Cluster
@@ -22,9 +23,9 @@ extract_data(session)
 
 
 # Use the extracted data to create new tables to fit query#1,2 and 3
-table_query_1(session)
-table_query_2(session)
-table_query_3(session)
+table_song_in_session_query(session)
+table_song_playlist_session_query(session)
+table_songs_listened_query(session)
 
 ## Execute the queries
 query1(session)
