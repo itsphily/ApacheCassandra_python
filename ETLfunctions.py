@@ -1,3 +1,13 @@
+'''
+This script contains all the python functions necessary to create an ETL pipeline.
+The functions included in this script allow us to connect to a database, create a keyspace,
+extract the data from the files in the chosen directory, create tables modeled to optimize our queries,
+insert the values in the new tables, and execute the queries.
+
+Author: Philippe Habra
+'''
+
+
 # Imports and libraries
 import pandas as pd
 import cassandra
@@ -75,11 +85,13 @@ def extract_data(session, folder_extension = '/event_data', datafile_new_csv = '
 # Creates the tables that we need to execute query 1, 2, 3
 
 
-## Modeling to execute Query #1
-# Query#1: Get artist, song title and song 's length in the music app history that was heard during  sessionId = 338, and itemInSession  = 4
-# This table was modeled to allow queries based on sessionid and iteminsession.
-# Recall that Cassandra does not support entries with similar keys
-# Since a user could listen to several songs within a session, I chose to use sessionid and iteminsession as primary keys
+''' 
+Modeling to execute Query #1
+Query#1: Get artist, song title and song 's length in the music app history that was heard during  sessionId = 338, and itemInSession  = 4
+This table was modeled to allow queries based on sessionid and iteminsession.
+Recall that Cassandra does not support entries with similar keys
+Since a user could listen to several songs within a session, I chose to use sessionid and iteminsession as primary keys
+'''
 def table_song_in_session_query(session):
     ## Resets(drop and create) song_in_session
     session.execute(drop_song_in_session)
@@ -110,11 +122,13 @@ def table_song_in_session_query(session):
     #for row in rows:
     #    print(row.sessionid, row.iteminsession, row.artist, row.song, row.length)"""
 
-## Modeling to execute Query #2
-# Query #2: Give me only the following: name of artist, song(sorted by itemInSession) and user(first and last name) for userid = 10, sessionid = 182
-# This table was modeled to allow queries based on userid and sessionid, allowing us to understand what users typically listen to.
-# Recall that Cassandra does not support entries with similar keys
-# Since a user could start several sessions, I chose to use userid and sessionid as primary keys
+''' 
+Modeling to execute Query #2
+Query #2: Give me only the following: name of artist, song(sorted by itemInSession) and user(first and last name) for userid = 10, sessionid = 182
+This table was modeled to allow queries based on userid and sessionid, allowing us to understand what users typically listen to.
+Recall that Cassandra does not support entries with similar keys
+Since a user could start several sessions, I chose to use userid and sessionid as primary keys.
+'''
 def table_song_playlist_session_query(session):
     ## Resets(drop and create) song_playlist_session
     session.execute(drop_song_playlist_session)
@@ -143,11 +157,13 @@ def table_song_playlist_session_query(session):
     #for row in rows:
     #    print(row.sessionid, row.iteminsession, row.artist, row.song, row.length)"""
 
-## Modeling to execute Query #3
-# Query #3: Give me every user name(first and last) in my music app history who listened to the song 'All Hands Against His Own'
-# This table was modeled to allow queries based on song allowing us to see which users listened to a specific song.
-# Recall that Cassandra does not support entries with similar keys
-# Since several users could listen to the same song, and that users could have the same name, I chose to use userid and song as primary keys
+''' 
+Modeling to execute Query #3
+Query #3: Give me every user name(first and last) in my music app history who listened to the song 'All Hands Against His Own'
+This table was modeled to allow queries based on song allowing us to see which users listened to a specific song.
+Recall that Cassandra does not support entries with similar keys
+Since several users could listen to the same song, and that users could have the same name, I chose to use userid and song as primary keys
+'''
 def table_songs_listened_query(session):
     # Resets (drop and create) songs_listened
     session.execute(drop_songs_listened)

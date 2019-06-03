@@ -1,3 +1,11 @@
+
+'''
+This script contains all the CQL queries that are needed to:
+Create/drop a keyspace, create/drop tables, insert values in those tables and execute the queries.
+
+Author: Philippe Habra
+'''
+
 # Drop and create the keyspace
 drop_cassandra_keyspace = """DROP KEYSPACE IF EXISTS Sparkify """
 create_cassandra_keyspace = """CREATE KEYSPACE IF NOT EXISTS Sparkify 
