@@ -61,7 +61,7 @@ Build, fill and analyze the database by creating an ELT pipeline using a python 
 ### song_in_session
 __Query#1: Get artist, song title and song 's length in the music app history that was heard during  sessionId = 338, and itemInSession  = 4__ <br>
 This song_in_session table was modeled to to execute Query #1, queries based on sessionid and iteminsession. Recall that Cassandra does not support entries with similar keys. Since a user could listen to several songs within a session, I chose to use sessionid and iteminsession as primary keys.
-####__song_in_session table__  
+#### __song_in_session table__  
     > __sessionId\*__  
     > __itemInSession\*__  
     > artist  
@@ -73,7 +73,7 @@ Sample query(query1): Get artist, song title and song's length in the music app 
 __Query #2: Give me only the following: name of artist, song(sorted by itemInSession) and user(first and last name) for userid = 10, sessionid = 182__ <br>
 This song_playlist_session table was modeled to allow queries based on userid and sessionid, allowing us to understand what users typically listen to.Recall that Cassandra does not support entries with similar keys. 
 Since a user could start several sessions, I chose to use userid and sessionid as primary keys, I added iteminsession as a partionning key to be able to retrieve the songs in order they were listened to within the session (ordered by iteminsession).  
-####__song_playlist_session table__   
+#### __song_playlist_session table__   
     > __userid\*__  
     > __sessionid\*__  
     > artist  
@@ -86,7 +86,7 @@ Sample query(query2): Give me only the following: name of artist, song (sorted b
 __Query #3: Give me every user name(first and last) in my music app history who listened to the song 'All Hands Against His Own'__
 This songs_listened table was modeled to allow queries based on song allowing us to see which users listened to a specific song.
 Recall that Cassandra does not support entries with similar keys.Since several users could listen to the same song, and that users could have the same name, I chose to use userid and song as primary keys.
-####__songs_listened table__ 
+#### __songs_listened table__ 
     > __song\*__  
     > __userid\*__    
     > __firstname__  
